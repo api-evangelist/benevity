@@ -1,0 +1,59 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Benevity
+providerId: benevity
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Corporate Social Responsibility
+- Workplace Giving
+- Donations
+- Plans
+description: >-
+  Benevity does not publish self-serve API pricing. Access to the Giving,
+  Causes, Spark, and Location Services APIs is partner-gated: a prospective
+  integrator requests a demo/consultation through Benevity's sales team, and
+  commercial terms (implementation fees, platform/subscription fees, and any
+  per-transaction or disbursement fees) are negotiated as part of a client or
+  partner agreement. There is no public price list, free tier, or credit-card
+  self-signup for API credentials.
+notes: >-
+  Contact Benevity via https://www.benevity.com/request-a-demo for pricing.
+  Existing clients typically already pay for the underlying Benevity platform
+  (Spark Employee Engagement, Giving, or Community Investment products); the
+  APIs extend that existing relationship rather than being sold standalone in
+  most cases (the Giving API is the main exception, marketed to non-Benevity-
+  platform partners such as e-commerce, banking, and rewards brands).
+sources:
+- https://developer.benevity.org/guides/obtaining-access/obtaining-access.html
+- https://benevity.com/products/api
+- https://developer.benevity.org/
+plans:
+- id: benevity-contact-sales
+  name: Contact Sales / Request a Demo
+  type: enterprise
+  description: >-
+    The only documented path to API access. Prospective partners request a
+    demo; Benevity then scopes and negotiates commercial terms, provisions
+    OAuth 2.0 client credentials, and grants access to a sandbox
+    (api.benevity-staging.org) before production go-live.
+  entries:
+  - label: API Access
+    name: api_access
+    type: negotiated
+    metric: contract
+    limit: -1
+    timeFrame: contract
+    geo: global
+    unit: 1
+    price: contact sales (no public price list)
+    userMultiplied: false
+  elements:
+  - name: Giving API (postpaid and prepaid donations)
+  - name: Causes API (Cause Search)
+  - name: Receipts API
+  - name: Spark API (existing Spark clients only)
+  - name: Location Services API
+  - name: Sandbox environment (api.benevity-staging.org)

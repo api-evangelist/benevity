@@ -1,0 +1,576 @@
+openapi: 3.0.3
+info:
+  title: Benevity API
+  description: >-
+    Modeled from the public Benevity API documentation at
+    developer.benevity.org. Covers the confirmed Causes, Giving (donations),
+    Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials
+    are partner-gated (request-a-demo); this document reflects publicly
+    documented paths and fields only - it does not fabricate an unverified
+    full surface. The Location Services API is intentionally omitted here
+    (see review.yml) because its exact request/response schema beyond the
+    overview guide was not independently confirmed.
+  version: '2024.8'
+  contact:
+    name: Benevity
+    url: https://developer.benevity.org/
+externalDocs:
+  description: Benevity API Documentation
+  url: https://developer.benevity.org/
+servers:
+- url: https://skyline.benevity.org
+  description: Giving, Causes, and Receipts API host
+- url: https://api.benevity.org
+  description: Spark API host (production)
+- url: https://api.benevity-staging.org
+  description: Spark API host (sandbox)
+tags:
+- name: Authorization
+- name: Causes
+- name: Giving
+- name: Receipts
+- name: Spark
+security:
+- bearerAuth: []
+paths:
+  /oauth2/token:
+    post:
+      operationId: getAccessToken
+      tags:
+      - Authorization
+      summary: Obtain an OAuth 2.0 client-credentials access token
+      description: >-
+        Server-to-server OAuth 2.0 client credentials grant. Send Basic
+        Authentication with base64-encoded `client_id:client_secret`. Tokens
+        are valid for `expires_in` seconds (typically 3600) and should be
+        reused until expiry rather than fetched per request.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Access token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: JWT bearer token
+                  token_type:
+                    type: string
+                    example: Bearer
+                  expires_in:
+                    type: integer
+                    example: 3600
+  /search/causes:
+    get:
+      operationId: searchCauses
+      tags:
+      - Causes
+      summary: Search the Benevity Cause Database
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Search term matched against cause name, description, and tags.
+      - name: visibility
+        in: query
+        schema:
+          type: string
+          enum: [match, donate, program, nominate, ineligible, inactive]
+      - name: category
+        in: query
+        schema:
+          type: string
+        description: NTEE category/subcategory filter.
+      - name: country
+        in: query
+        schema:
+          type: string
+        description: ISO 3166 country code.
+      - name: state
+        in: query
+        schema:
+          type: string
+        description: ISO 3166-2 state/province code.
+      - name: search_location
+        in: query
+        schema:
+          type: string
+        description: '"latitude,longitude" for proximity search.'
+      - name: autocorrect
+        in: query
+        schema:
+          type: boolean
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          default: 25
+      - name: sort
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching causes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            country:
+                              type: string
+                            categories:
+                              type: array
+                              items:
+                                type: string
+                            visibility:
+                              type: string
+                            status:
+                              type: object
+                            snippets:
+                              type: array
+                              items:
+                                type: string
+                  meta:
+                    type: object
+                  links:
+                    type: object
+  /donations:
+    post:
+      operationId: createPostpaidDonation
+      tags:
+      - Giving
+      summary: Create a postpaid company donation
+      description: >-
+        Submits a donation settled monthly against a donation report invoiced
+        to the client company, rather than captured immediately by card.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destination:
+                  type: object
+                  properties:
+                    recipientId:
+                      type: string
+                    foundationId:
+                      type: string
+                funds:
+                  type: object
+                  properties:
+                    paymentType:
+                      type: string
+                    currencyCode:
+                      type: string
+                    amount:
+                      type: integer
+                      description: Amount in lowest currency denomination (e.g. cents).
+                donor:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                    email:
+                      type: string
+                    receipted:
+                      type: boolean
+                    address:
+                      type: object
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Up to 100 custom key/value pairs.
+              required:
+              - destination
+              - funds
+      responses:
+        '201':
+          description: Donation accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: UUID
+                  type:
+                    type: string
+                    example: donations
+                  destination:
+                    type: object
+                  funds:
+                    type: object
+                  donor:
+                    type: object
+                  metadata:
+                    type: object
+                  state:
+                    type: object
+                    properties:
+                      processingStatus:
+                        type: string
+                        example: ACCEPTED
+                      statusLastUpdated:
+                        type: string
+                        format: date-time
+  /payments/card/transactions:
+    post:
+      operationId: createCreditCardDonation
+      tags:
+      - Giving
+      summary: Create a prepaid credit card donation
+      description: >-
+        Captures a donation immediately via a tokenized card payment
+        (BlueSnap-backed processor), optionally split across multiple cause
+        allocations, with optional Gift Aid (UK) handling.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyCode:
+                  type: string
+                total:
+                  type: integer
+                currencyCode:
+                  type: string
+                paymentConfig:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                    merchantAccountId:
+                      type: string
+                    processor:
+                      type: string
+                      example: BLUESNAP
+                cardHolder:
+                  type: object
+                referenceNumber:
+                  type: string
+                adapter:
+                  type: string
+                  example: Adapter.General
+                purchaseItems:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      itemTotalAmountCents:
+                        type: integer
+                      allocations:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            causeCode:
+                              type: string
+                            amountCents:
+                              type: integer
+                giftAid:
+                  type: boolean
+                description:
+                  type: string
+                softDescriptor:
+                  type: string
+                payerBusinessName:
+                  type: string
+              required:
+              - companyCode
+              - total
+              - currencyCode
+              - paymentConfig
+              - referenceNumber
+              - purchaseItems
+      responses:
+        '201':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactionId:
+                    type: string
+                  creditCardId:
+                    type: string
+                  processorTransactionId:
+                    type: string
+                  referenceNumber:
+                    type: string
+                  backendReceiptId:
+                    type: string
+                  amount:
+                    type: object
+                    properties:
+                      totalAmountCents:
+                        type: integer
+                      currencyCode:
+                        type: string
+                  transactionFee:
+                    type: number
+  /receipts/{backendReceiptId}:
+    get:
+      operationId: getReceiptPdf
+      tags:
+      - Receipts
+      summary: Download a donation receipt as PDF
+      parameters:
+      - name: backendReceiptId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: test_receipt_id_4G801PXR6W
+      responses:
+        '200':
+          description: Receipt PDF
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+  /receipts/{backendReceiptId}/email:
+    post:
+      operationId: emailReceipt
+      tags:
+      - Receipts
+      summary: Email a donation receipt to the donor
+      parameters:
+      - name: backendReceiptId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+              required:
+              - email
+      responses:
+        '202':
+          description: Receipt email queued for delivery
+  /search/givingopportunities:
+    get:
+      operationId: searchGivingOpportunities
+      tags:
+      - Spark
+      summary: Search a company's giving opportunities (Spark API)
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: search_location
+        in: query
+        schema:
+          type: string
+      - name: autocorrect
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Matching giving opportunities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        image_url:
+                          type: string
+                        creator_id:
+                          type: string
+                        creator_name:
+                          type: string
+                        creator_type:
+                          type: string
+                        peer_match:
+                          type: boolean
+                        company_match:
+                          type: boolean
+                        portfolio_code:
+                          type: string
+                        projects:
+                          type: array
+                          items:
+                            type: object
+                        causes:
+                          type: array
+                          items:
+                            type: object
+                        snippets:
+                          type: array
+                          items:
+                            type: string
+  /search/volunteeropportunities:
+    get:
+      operationId: searchVolunteerOpportunities
+      tags:
+      - Spark
+      summary: Search a company's volunteer opportunities (Spark API)
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: search_location
+        in: query
+        schema:
+          type: string
+      - name: autocorrect
+        in: query
+        schema:
+          type: boolean
+      - name: filter[ends_after]
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: filter[starts_before]
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: filter[minimum_open_spots]
+        in: query
+        schema:
+          type: integer
+      - name: filter[has_location]
+        in: query
+        schema:
+          type: boolean
+      - name: filter[interests]
+        in: query
+        schema:
+          type: string
+      - name: filter[skills]
+        in: query
+        schema:
+          type: string
+      - name: filter[temporal_type]
+        in: query
+        schema:
+          type: string
+          enum: [ongoing, time_bounded]
+      responses:
+        '200':
+          description: Matching volunteer opportunities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  volunteer_opportunities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        location_notes:
+                          type: string
+                        start_timestamp:
+                          type: string
+                          format: date-time
+                        end_timestamp:
+                          type: string
+                          format: date-time
+                        time_zone:
+                          type: string
+                        cause_id:
+                          type: string
+                        cause_name:
+                          type: string
+                        image_url:
+                          type: string
+                        hero_image_url:
+                          type: string
+                        cause_logo_url:
+                          type: string
+                        address:
+                          type: object
+                        characteristics:
+                          type: array
+                          items:
+                            type: string
+                        interests:
+                          type: array
+                          items:
+                            type: string
+                        skills:
+                          type: array
+                          items:
+                            type: string
+                        shifts:
+                          type: array
+                          items:
+                            type: object
+                        geo_coordinates:
+                          type: object
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    basicAuth:
+      type: http
+      scheme: basic

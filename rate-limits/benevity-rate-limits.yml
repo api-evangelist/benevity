@@ -1,0 +1,56 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Benevity
+providerId: benevity
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Corporate Social Responsibility
+- Workplace Giving
+- Rate Limiting
+- Quotas
+description: >-
+  Benevity does not publish fixed numeric request-rate limits for the Giving,
+  Causes, Spark, or Location Services APIs in its public developer
+  documentation. OAuth 2.0 access tokens are valid for 3600 seconds
+  (expires_in), and the docs explicitly advise reusing a token until expiry
+  rather than requesting a new one per call "to optimize performance and avoid
+  rate limiting issues" - implying a token-request limiter exists on
+  /oauth2/token even though no number is published. The production API targets
+  ~99.9% uptime outside of a recurring maintenance window (Saturday nights,
+  6:00pm-12:00am MT, roughly every 5 weeks); a separate sandbox
+  (api.benevity-staging.org) targets uptime during business hours only.
+notes: >-
+  Numeric per-account or per-endpoint limits were not found in the public
+  guides or release notes as of the review date. Confirm actual limits and
+  maintenance-window impact directly with Benevity once partner credentials
+  are issued.
+sources:
+- https://developer.benevity.org/guides/authorization/authorize.html
+- https://developer.benevity.org/releases/
+- https://developer.benevity.org/
+responseCodes:
+  throttled: 429
+limits:
+- name: OAuth2 Token Requests
+  scope: client
+  metric: requests
+  limit: not published
+  notes: Docs advise reusing the access_token until near expiry rather than fetching a new one per request.
+- name: Giving / Causes / Receipts API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No numeric limit documented for the skyline.benevity.org host.
+- name: Spark API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No numeric limit documented for the api.benevity.org host.
+- name: Scheduled Maintenance Window
+  scope: platform
+  metric: availability
+  limit: weekly Saturday 6:00pm-12:00am MT, roughly every 5 weeks
+  notes: Production targets ~99.9% uptime outside this window per the releases page.

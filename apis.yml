@@ -1,0 +1,189 @@
+aid: benevity
+url: https://raw.githubusercontent.com/api-evangelist/benevity/refs/heads/main/apis.yml
+name: Benevity
+kind: company
+description: Benevity is a Calgary-based corporate purpose software platform for
+  workplace giving, matching, grantmaking, and employee/customer volunteering.
+  Its Giving API lets partners embed nonprofit-of-choice donations, optional
+  matching, and charitable gift cards into e-commerce, banking, and rewards
+  experiences; the Cause Search API exposes Benevity's vetted global nonprofit
+  database; the Spark API lets existing Spark Employee Engagement clients surface
+  giving and volunteering opportunities in other interfaces; and the Location
+  Services API lets clients manage locations (stores, franchises, offices) inside
+  the Benevity ecosystem. The API follows the RESTful/OpenAPI standard and is
+  documented publicly at developer.benevity.org, but credentials are partner-gated -
+  access requires requesting a demo/business relationship with Benevity rather
+  than self-serve signup.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Corporate Social Responsibility
+- Workplace Giving
+- Donations
+- Volunteering
+- Nonprofits
+- Matching Gifts
+- CSR
+- ESG
+created: '2026-07-03'
+modified: '2026-07-03'
+specificationVersion: '0.19'
+apis:
+- aid: benevity:benevity-causes-api
+  name: Benevity Causes API
+  tags:
+  - Causes
+  - Nonprofits
+  - Search
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.benevity.org/guides/causes/search-cause
+  baseURL: https://skyline.benevity.org
+  properties:
+  - url: https://developer.benevity.org/guides/
+    type: Documentation
+  - url: https://developer.benevity.org/guides/causes/search-cause
+    type: APIReference
+  - url: openapi/benevity-openapi.yml
+    type: OpenAPI
+  - url: collections/benevity.postman_collection.json
+    type: Postman
+  - url: collections/benevity.opencollection.json
+    type: OpenCollection
+  description: Search the Benevity Cause Database - a global directory of vetted,
+    registered nonprofits - by keyword, location, NTEE category, country/state,
+    and geographic proximity, with pagination and eligibility (match/donate/
+    program/nominate) filtering on each result.
+- aid: benevity:benevity-giving-api
+  name: Benevity Giving API
+  tags:
+  - Donations
+  - Payments
+  - Matching Gifts
+  - Gift Cards
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.benevity.org/guides/giving/
+  baseURL: https://skyline.benevity.org
+  properties:
+  - url: https://developer.benevity.org/guides/giving/
+    type: Documentation
+  - url: https://developer.benevity.org/guides/giving/post-paid-donations/
+    type: Documentation
+  - url: https://developer.benevity.org/guides/giving/pre-paid-donations/
+    type: Documentation
+  - url: openapi/benevity-openapi.yml
+    type: OpenAPI
+  - url: collections/benevity.postman_collection.json
+    type: Postman
+  - url: collections/benevity.opencollection.json
+    type: OpenCollection
+  description: Route nonprofit-of-choice donations into digital experiences -
+    e-commerce, online banking, rewards programs, and charitable gift cards.
+    Postpaid company donations settle monthly against a donation report; prepaid
+    donations are captured immediately by credit card (via a BlueSnap-backed
+    tokenized payment flow), with optional company/peer matching and Gift Aid
+    (UK) handling.
+- aid: benevity:benevity-receipts-api
+  name: Benevity Receipts API
+  tags:
+  - Receipts
+  - Donations
+  - PDF
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.benevity.org/guides/giving/get-receipt.html
+  baseURL: https://skyline.benevity.org
+  properties:
+  - url: https://developer.benevity.org/guides/giving/get-receipt.html
+    type: Documentation
+  - url: openapi/benevity-openapi.yml
+    type: OpenAPI
+  - url: collections/benevity.postman_collection.json
+    type: Postman
+  - url: collections/benevity.opencollection.json
+    type: OpenCollection
+  description: Retrieve the PDF receipt for a completed donation by its backend
+    receipt ID, or request that the receipt be emailed to the donor. Receipts
+    show issue date, donor name/address, amount, and the disbursing foundation
+    partner.
+- aid: benevity:benevity-spark-giving-opportunities-api
+  name: Benevity Spark Giving Opportunities API
+  tags:
+  - Spark
+  - Giving Opportunities
+  - Employee Engagement
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.benevity.org/guides/spark-api/search-giveops.html
+  baseURL: https://api.benevity.org
+  properties:
+  - url: https://developer.benevity.org/guides/spark-api/overview.html
+    type: Documentation
+  - url: https://developer.benevity.org/guides/spark-api/search-giveops.html
+    type: APIReference
+  - url: openapi/benevity-openapi.yml
+    type: OpenAPI
+  - url: collections/benevity.postman_collection.json
+    type: Postman
+  - url: collections/benevity.opencollection.json
+    type: OpenCollection
+  description: For existing Spark Employee Engagement clients - search a company's
+    active giving opportunities (initiatives that route donations to one or more
+    causes) by keyword and geographic proximity, for display on an intranet or
+    in a communication-tool integration.
+- aid: benevity:benevity-spark-volunteer-opportunities-api
+  name: Benevity Spark Volunteer Opportunities API
+  tags:
+  - Spark
+  - Volunteering
+  - Employee Engagement
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.benevity.org/guides/spark-api/search-volops.html
+  baseURL: https://api.benevity.org
+  properties:
+  - url: https://developer.benevity.org/guides/spark-api/overview.html
+    type: Documentation
+  - url: https://developer.benevity.org/guides/spark-api/search-volops.html
+    type: APIReference
+  - url: openapi/benevity-openapi.yml
+    type: OpenAPI
+  - url: collections/benevity.postman_collection.json
+    type: Postman
+  - url: collections/benevity.opencollection.json
+    type: OpenCollection
+  description: For existing Spark Employee Engagement clients - search a company's
+    volunteer opportunities/events by keyword, date range, open shift spots,
+    interests, skills, and whether the opportunity is ongoing or time-bounded.
+- aid: benevity:benevity-location-services-api
+  name: Benevity Location Services API
+  tags:
+  - Locations
+  - Franchises
+  - Community Investment
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.benevity.org/guides/location-api/overview.html
+  baseURL: https://api.benevity.org
+  properties:
+  - url: https://developer.benevity.org/guides/location-api/overview.html
+    type: Documentation
+  description: Create and manage locations (stores, franchises, offices) inside
+    the Benevity ecosystem - address data, contact information, and tags - so
+    multi-location organizations can attribute giving and volunteering activity
+    to a specific site. JWT-authenticated with the api.locations scope,
+    JSON:API content type, URI-versioned (v1 current). As of the review date
+    this API is documented as integrated only with the Versaic community
+    investment platform; exact request/response schemas beyond the overview
+    guide were not independently confirmed, so no OpenAPI/collection artifact
+    was generated for it (endpointsModeled - see review.yml).
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/benevity
+- type: Website
+  url: https://benevity.com
+- type: Documentation
+  url: https://developer.benevity.org/
+- type: Plans
+  url: plans/benevity-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/benevity-rate-limits.yml
+- type: FinOps
+  url: finops/benevity-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

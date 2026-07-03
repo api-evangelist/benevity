@@ -1,0 +1,166 @@
+{
+  "info": {
+    "name": "Benevity API",
+    "description": "Partner-gated corporate purpose API - Giving (donations), Causes (search), Receipts, and Spark (giving/volunteer opportunities for existing Spark Employee Engagement clients). Giving/Causes/Receipts host: https://skyline.benevity.org. Spark host: https://api.benevity.org (production) or https://api.benevity-staging.org (sandbox). All requests require a JWT Bearer token obtained via the OAuth 2.0 client credentials grant at /oauth2/token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{accessToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "givingBaseUrl", "value": "https://skyline.benevity.org", "type": "string" },
+    { "key": "sparkBaseUrl", "value": "https://api.benevity.org", "type": "string" },
+    { "key": "clientId", "value": "", "type": "string" },
+    { "key": "clientSecret", "value": "", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Authorization",
+      "item": [
+        {
+          "name": "Get an OAuth2 access token",
+          "request": {
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "{{clientId}}", "type": "string" },
+                { "key": "password", "value": "{{clientSecret}}", "type": "string" }
+              ]
+            },
+            "header": [],
+            "url": { "raw": "{{givingBaseUrl}}/oauth2/token", "host": ["{{givingBaseUrl}}"], "path": ["oauth2", "token"] },
+            "description": "OAuth 2.0 client credentials grant. Returns a JWT access_token (expires_in seconds, typically 3600)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Causes",
+      "item": [
+        {
+          "name": "Search causes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{givingBaseUrl}}/search/causes?q=literacy&page_size=25",
+              "host": ["{{givingBaseUrl}}"],
+              "path": ["search", "causes"],
+              "query": [
+                { "key": "q", "value": "literacy" },
+                { "key": "page_size", "value": "25" }
+              ]
+            },
+            "description": "Searches the Benevity Cause Database by keyword, location, NTEE category, country/state, with eligibility filtering."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Giving",
+      "item": [
+        {
+          "name": "Create a postpaid company donation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destination\": { \"recipientId\": \"\" },\n  \"funds\": { \"paymentType\": \"\", \"currencyCode\": \"USD\", \"amount\": 1000 },\n  \"donor\": { \"fullName\": \"\", \"email\": \"\" }\n}"
+            },
+            "url": { "raw": "{{givingBaseUrl}}/donations", "host": ["{{givingBaseUrl}}"], "path": ["donations"] },
+            "description": "Submits a donation settled monthly against a donation report invoiced to the client company."
+          }
+        },
+        {
+          "name": "Create a prepaid credit card donation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyCode\": \"\",\n  \"total\": 1000,\n  \"currencyCode\": \"USD\",\n  \"paymentConfig\": { \"token\": \"\", \"merchantAccountId\": \"\", \"processor\": \"BLUESNAP\" },\n  \"referenceNumber\": \"\",\n  \"adapter\": \"Adapter.General\",\n  \"purchaseItems\": [ { \"itemTotalAmountCents\": 1000, \"allocations\": [ { \"causeCode\": \"\", \"amountCents\": 1000 } ] } ]\n}"
+            },
+            "url": { "raw": "{{givingBaseUrl}}/payments/card/transactions", "host": ["{{givingBaseUrl}}"], "path": ["payments", "card", "transactions"] },
+            "description": "Captures a donation immediately via a tokenized card payment (BlueSnap-backed processor)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Receipts",
+      "item": [
+        {
+          "name": "Download a donation receipt PDF",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{givingBaseUrl}}/receipts/:backendReceiptId",
+              "host": ["{{givingBaseUrl}}"],
+              "path": ["receipts", ":backendReceiptId"],
+              "variable": [{ "key": "backendReceiptId", "value": "" }]
+            },
+            "description": "Returns the receipt as a binary PDF."
+          }
+        },
+        {
+          "name": "Email a donation receipt",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"\"\n}" },
+            "url": {
+              "raw": "{{givingBaseUrl}}/receipts/:backendReceiptId/email",
+              "host": ["{{givingBaseUrl}}"],
+              "path": ["receipts", ":backendReceiptId", "email"],
+              "variable": [{ "key": "backendReceiptId", "value": "" }]
+            },
+            "description": "Queues the receipt PDF to be emailed to the donor. Returns 202 Accepted."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Spark",
+      "item": [
+        {
+          "name": "Search giving opportunities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{sparkBaseUrl}}/search/givingopportunities?q=education",
+              "host": ["{{sparkBaseUrl}}"],
+              "path": ["search", "givingopportunities"],
+              "query": [{ "key": "q", "value": "education" }]
+            },
+            "description": "For existing Spark Employee Engagement clients - search active giving opportunities."
+          }
+        },
+        {
+          "name": "Search volunteer opportunities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{sparkBaseUrl}}/search/volunteeropportunities?q=cleanup&filter[temporal_type]=time_bounded",
+              "host": ["{{sparkBaseUrl}}"],
+              "path": ["search", "volunteeropportunities"],
+              "query": [
+                { "key": "q", "value": "cleanup" },
+                { "key": "filter[temporal_type]", "value": "time_bounded" }
+              ]
+            },
+            "description": "For existing Spark Employee Engagement clients - search volunteer opportunities/events."
+          }
+        }
+      ]
+    }
+  ]
+}

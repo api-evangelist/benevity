@@ -1,0 +1,137 @@
+aid: benevity
+name: Benevity
+review:
+  question: Does Benevity expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Every documented Benevity surface
+    (Causes, Giving/donations, Receipts, Spark opportunity search, Location
+    Services) is request/response REST over HTTPS. Benevity's public docs at
+    developer.benevity.org do not mention Server-Sent Events, webhooks-as-
+    push, or any WebSocket (ws/wss) channel to model, so there is no
+    server-push transport in scope for an AsyncAPI document.
+findings:
+  summary: |
+    Benevity does not publish a documented public WebSocket API. Benevity's
+    developer portal (developer.benevity.org) documents a real, RESTful/
+    OpenAPI-style API family - Causes (search), Giving (postpaid company
+    donations and prepaid credit-card donations), Receipts (PDF download and
+    email), Spark (giving-opportunity and volunteer-opportunity search, for
+    existing Spark Employee Engagement clients only), and Location Services
+    (locations/tags/contacts, integrated with the Versaic community
+    investment platform). Authentication is the OAuth 2.0 client credentials
+    grant against POST /oauth2/token (Basic auth of client_id:client_secret),
+    returning a JWT bearer token good for expires_in seconds (typically
+    3600). All confirmed endpoints are plain HTTPS REST; none use WebSocket,
+    and Benevity's own docs make no mention of a realtime/bidirectional
+    channel. Access itself is partner-gated: the docs are public and
+    readable, but obtaining client credentials requires requesting a demo
+    through Benevity's sales team (benevity.com/request-a-demo) rather than
+    self-serve signup, and there is no public price list.
+  openSource: |
+    Benevity's API and platform are closed-source commercial software; no
+    open-source SDK, client library, or server implementation was found.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://skyline.benevity.org
+      documented: true
+      note: Causes, Giving (donations), and Receipts endpoints.
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.benevity.org
+      documented: true
+      note: Spark giving/volunteer opportunity search (production); sandbox is https://api.benevity-staging.org.
+    - protocol: Webhook
+      scheme: https
+      documented: false
+      note: No outbound webhook/callback mechanism is documented in the public guides as of the review date.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Causes, Giving, Receipts, Spark, or Location Services guides as of the review date.
+  endpointsConfirmedRest:
+    - POST https://skyline.benevity.org/oauth2/token
+    - GET  https://skyline.benevity.org/search/causes
+    - POST https://skyline.benevity.org/donations
+    - POST https://skyline.benevity.org/payments/card/transactions
+    - GET  https://skyline.benevity.org/receipts/{backendReceiptId}
+    - POST https://skyline.benevity.org/receipts/{backendReceiptId}/email
+    - GET  https://api.benevity.org/search/givingopportunities
+    - GET  https://api.benevity.org/search/volunteeropportunities
+  endpointsModeled:
+    - description: >-
+        Location Services API (create/manage locations, tags, and contacts).
+        The overview guide confirms JWT auth with an api.locations scope,
+        application/vnd.api+json content type, and URI path versioning
+        (v1 current), and the docs sidebar lists guide pages for Locations,
+        Tags, and Contacts plus a Swagger API reference page. Exact request/
+        response field schemas and the production host for this API were not
+        independently confirmed during this review (sidebar links returned
+        404 outside the documentation site's own navigation context), so no
+        OpenAPI or collection entry was generated for it - only the apis.yml
+        listing with an honest description.
+      sourceUrl: https://developer.benevity.org/guides/location-api/overview.html
+sources:
+  - url: https://developer.benevity.org/
+    type: Documentation
+    note: Portal overview naming Causes, Giving, and Spark APIs; RESTful/OpenAPI standard; access via request-a-demo.
+  - url: https://developer.benevity.org/api-reference/
+    type: APIReference
+    note: API reference index (authentication errors, donation API errors, supported currencies).
+  - url: https://developer.benevity.org/guides/authorization/authorize.html
+    type: Documentation
+    note: OAuth 2.0 client credentials flow, POST /oauth2/token, Basic auth, JWT bearer token, expires_in 3600.
+  - url: https://developer.benevity.org/guides/obtaining-access/obtaining-access.html
+    type: Documentation
+    note: Access is partner-gated - request a demo via benevity.com/request-a-demo to obtain credentials.
+  - url: https://developer.benevity.org/guides/causes/search-cause
+    type: APIReference
+    note: 'GET https://skyline.benevity.org/search/causes with q, visibility, category, country, state, search_location, autocorrect, page, page_size, sort.'
+  - url: https://developer.benevity.org/guides/giving/
+    type: Documentation
+    note: Postpaid vs prepaid donation model overview.
+  - url: https://developer.benevity.org/guides/giving/post-paid-donations/make-company-donation.html
+    type: APIReference
+    note: 'POST https://skyline.benevity.org/donations - destination/funds/donor/metadata; response state.processingStatus ACCEPTED.'
+  - url: https://developer.benevity.org/guides/giving/pre-paid-donations/make-credit-card-donation.html
+    type: APIReference
+    note: 'POST https://skyline.benevity.org/payments/card/transactions - BlueSnap-backed tokenized card payment with cause allocations and optional Gift Aid.'
+  - url: https://developer.benevity.org/guides/giving/get-receipt.html
+    type: APIReference
+    note: 'GET /receipts/{backendReceiptId} (PDF) and POST /receipts/{backendReceiptId}/email (202 Accepted) on skyline.benevity.org.'
+  - url: https://developer.benevity.org/guides/spark-api/overview.html
+    type: Documentation
+    note: Spark API scope - for existing Spark Employee Engagement clients to surface giving/volunteering opportunities elsewhere.
+  - url: https://developer.benevity.org/guides/spark-api/search-giveops.html
+    type: APIReference
+    note: 'GET https://api.benevity.org/search/givingopportunities with q, search_location, autocorrect.'
+  - url: https://developer.benevity.org/guides/spark-api/search-volops.html
+    type: APIReference
+    note: 'GET https://api.benevity.org/search/volunteeropportunities with q, search_location, autocorrect, and filter[...] params.'
+  - url: https://developer.benevity.org/guides/location-api/overview.html
+    type: Documentation
+    note: 'JWT + api.locations scope, application/vnd.api+json, URI-versioned v1; integrated only with Versaic as of review date.'
+  - url: https://developer.benevity.org/guides/concepts-and-references/
+    type: Documentation
+    note: Foundation partners, UK Gift Aid, and 3-D Secure (3DS) concepts referenced across the Giving API.
+  - url: https://developer.benevity.org/releases/
+    type: Documentation
+    note: Calendar-based release versioning (e.g. 2024.8); ~99.9% production uptime target; weekly Saturday maintenance window; sandbox at api.benevity-staging.org.
+  - url: https://benevity.com/products/api
+    type: Documentation
+    note: Giving API marketing page - nonprofit-of-choice donations, matching, gift cards embedded in e-commerce/banking/rewards; no public pricing; request-a-demo call to action.
+  - url: https://www.linkedin.com/company/benevity/
+    type: SourceCode
+    note: Company LinkedIn profile - Calgary-based corporate purpose software, certified B Corporation.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists anywhere in Benevity's public API
+    documentation. All confirmed and modeled surfaces are HTTPS REST. No
+    AsyncAPI document was created because there is no server-push transport
+    (WebSocket or SSE) documented on any Benevity API to model.

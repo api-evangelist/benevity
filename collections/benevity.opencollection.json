@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benevity API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{accessToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Authorization", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get an OAuth2 access token.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://skyline.benevity.org/oauth2/token",
+            "auth": { "type": "basic", "username": "{{clientId}}", "password": "{{clientSecret}}" }
+          },
+          "docs": "OAuth 2.0 client credentials grant. Returns a JWT access_token valid for expires_in seconds (typically 3600); reuse until near expiry."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Causes", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Search causes.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://skyline.benevity.org/search/causes",
+            "params": [
+              { "name": "q", "value": "", "type": "query", "description": "Search term." },
+              { "name": "country", "value": "", "type": "query", "description": "ISO 3166 country code." },
+              { "name": "page_size", "value": "25", "type": "query", "description": "Results per page." }
+            ]
+          },
+          "docs": "Searches the Benevity Cause Database by keyword, location, category, and country/state, with eligibility filtering."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Giving", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a postpaid company donation.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://skyline.benevity.org/donations",
+            "body": { "type": "json", "data": "{\n  \"destination\": { \"recipientId\": \"\" },\n  \"funds\": { \"paymentType\": \"\", \"currencyCode\": \"USD\", \"amount\": 1000 },\n  \"donor\": { \"fullName\": \"\", \"email\": \"\" }\n}" }
+          },
+          "docs": "Submits a donation settled monthly against a donation report invoiced to the client company."
+        },
+        {
+          "info": { "name": "Create a prepaid credit card donation.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://skyline.benevity.org/payments/card/transactions",
+            "body": { "type": "json", "data": "{\n  \"companyCode\": \"\",\n  \"total\": 1000,\n  \"currencyCode\": \"USD\",\n  \"paymentConfig\": { \"token\": \"\", \"merchantAccountId\": \"\", \"processor\": \"BLUESNAP\" },\n  \"referenceNumber\": \"\",\n  \"adapter\": \"Adapter.General\",\n  \"purchaseItems\": [ { \"itemTotalAmountCents\": 1000, \"allocations\": [ { \"causeCode\": \"\", \"amountCents\": 1000 } ] } ]\n}" }
+          },
+          "docs": "Captures a donation immediately via a tokenized card payment (BlueSnap-backed), optionally split across multiple cause allocations."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Receipts", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Download a donation receipt PDF.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://skyline.benevity.org/receipts/:backendReceiptId",
+            "params": [
+              { "name": "backendReceiptId", "value": "", "type": "path", "description": "Receipt ID returned from the donation-creation response." }
+            ]
+          },
+          "docs": "Returns the receipt as a binary PDF."
+        },
+        {
+          "info": { "name": "Email a donation receipt.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://skyline.benevity.org/receipts/:backendReceiptId/email",
+            "params": [
+              { "name": "backendReceiptId", "value": "", "type": "path", "description": "Receipt ID returned from the donation-creation response." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"email\": \"\"\n}" }
+          },
+          "docs": "Queues the receipt PDF to be emailed to the donor. Returns 202 Accepted."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Spark", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Search giving opportunities.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.benevity.org/search/givingopportunities",
+            "params": [
+              { "name": "q", "value": "", "type": "query", "description": "Search term." }
+            ]
+          },
+          "docs": "For existing Spark Employee Engagement clients - search active giving opportunities."
+        },
+        {
+          "info": { "name": "Search volunteer opportunities.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.benevity.org/search/volunteeropportunities",
+            "params": [
+              { "name": "q", "value": "", "type": "query", "description": "Search term." },
+              { "name": "filter[temporal_type]", "value": "", "type": "query", "description": "ongoing or time_bounded." }
+            ]
+          },
+          "docs": "For existing Spark Employee Engagement clients - search volunteer opportunities/events."
+        }
+      ]
+    }
+  ]
+}

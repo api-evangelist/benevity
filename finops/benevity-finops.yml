@@ -1,0 +1,58 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Benevity
+providerId: benevity
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Corporate Social Responsibility
+- Workplace Giving
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Benevity spend. Benevity's API is not billed like a typical
+  metered developer platform - there is no public per-call or per-token price.
+  Costs instead flow from a negotiated client/partner agreement that typically
+  bundles platform/subscription fees (for Spark Employee Engagement, Giving,
+  or Community Investment products), implementation/integration services, and,
+  for the Giving API, transaction-related costs on donations processed
+  (postpaid donation report settlement or prepaid card-processing fees, e.g.
+  the BlueSnap-backed payment flow). Enterprise agreements are the only
+  documented commercial vehicle; there is no self-serve usage-based invoice to
+  reconcile against API call volume.
+notes: >-
+  Because pricing is negotiated per client/partner and not published, FOCUS
+  columns below are structural placeholders rather than reconciled billing
+  data. Obtain actual contract/invoice terms directly from Benevity.
+sources:
+- https://benevity.com/products/api
+- https://developer.benevity.org/guides/obtaining-access/obtaining-access.html
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Benevity
+serviceCategory: Corporate Social Responsibility / Workplace Giving Software
+billingModel:
+  pricingCategory: Negotiated / Enterprise
+  billingFrequency: Contract-defined (commonly monthly donation-report settlement plus subscription/services fees)
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Benevity Giving / Spark / Causes / Location Services API
+  ServiceCategory: Corporate Social Responsibility / Workplace Giving Software
+  ProviderName: Benevity
+  PublisherName: Benevity
+  InvoiceIssuerName: Benevity
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Negotiated
