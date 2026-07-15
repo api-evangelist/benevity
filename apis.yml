@@ -172,6 +172,8 @@ apis:
     guide were not independently confirmed, so no OpenAPI/collection artifact
     was generated for it (endpointsModeled - see review.yml).
 common:
+- type: AgenticAccess
+  url: agentic-access/benevity-agentic-access.yml
 - type: TrustCenter
   url: security/benevity-trust-center.yml
 - type: VulnerabilityDisclosure
