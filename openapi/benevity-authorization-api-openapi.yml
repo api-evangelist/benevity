@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: Benevity Authorization API
+  description: Modeled from the public Benevity API documentation at developer.benevity.org. Covers the confirmed Causes, Giving (donations), Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials are partner-gated (request-a-demo); this document reflects publicly documented paths and fields only - it does not fabricate an unverified full surface. The Location Services API is intentionally omitted here (see review.yml) because its exact request/response schema beyond the overview guide was not independently confirmed.
+  version: '2024.8'
+  contact:
+    name: Benevity
+    url: https://developer.benevity.org/
+servers:
+- url: https://skyline.benevity.org
+  description: Giving, Causes, and Receipts API host
+- url: https://api.benevity.org
+  description: Spark API host (production)
+- url: https://api.benevity-staging.org
+  description: Spark API host (sandbox)
+security:
+- bearerAuth: []
+tags:
+- name: Authorization
+paths:
+  /oauth2/token:
+    post:
+      operationId: getAccessToken
+      tags:
+      - Authorization
+      summary: Obtain an OAuth 2.0 client-credentials access token
+      description: Server-to-server OAuth 2.0 client credentials grant. Send Basic Authentication with base64-encoded `client_id:client_secret`. Tokens are valid for `expires_in` seconds (typically 3600) and should be reused until expiry rather than fetched per request.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Access token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: JWT bearer token
+                  token_type:
+                    type: string
+                    example: Bearer
+                  expires_in:
+                    type: integer
+                    example: 3600
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    basicAuth:
+      type: http
+      scheme: basic
+externalDocs:
+  description: Benevity API Documentation
+  url: https://developer.benevity.org/

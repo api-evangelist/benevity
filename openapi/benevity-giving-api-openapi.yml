@@ -1,0 +1,208 @@
+openapi: 3.0.3
+info:
+  title: Benevity Authorization Giving API
+  description: Modeled from the public Benevity API documentation at developer.benevity.org. Covers the confirmed Causes, Giving (donations), Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials are partner-gated (request-a-demo); this document reflects publicly documented paths and fields only - it does not fabricate an unverified full surface. The Location Services API is intentionally omitted here (see review.yml) because its exact request/response schema beyond the overview guide was not independently confirmed.
+  version: '2024.8'
+  contact:
+    name: Benevity
+    url: https://developer.benevity.org/
+servers:
+- url: https://skyline.benevity.org
+  description: Giving, Causes, and Receipts API host
+- url: https://api.benevity.org
+  description: Spark API host (production)
+- url: https://api.benevity-staging.org
+  description: Spark API host (sandbox)
+security:
+- bearerAuth: []
+tags:
+- name: Giving
+paths:
+  /donations:
+    post:
+      operationId: createPostpaidDonation
+      tags:
+      - Giving
+      summary: Create a postpaid company donation
+      description: Submits a donation settled monthly against a donation report invoiced to the client company, rather than captured immediately by card.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destination:
+                  type: object
+                  properties:
+                    recipientId:
+                      type: string
+                    foundationId:
+                      type: string
+                funds:
+                  type: object
+                  properties:
+                    paymentType:
+                      type: string
+                    currencyCode:
+                      type: string
+                    amount:
+                      type: integer
+                      description: Amount in lowest currency denomination (e.g. cents).
+                donor:
+                  type: object
+                  properties:
+                    fullName:
+                      type: string
+                    email:
+                      type: string
+                    receipted:
+                      type: boolean
+                    address:
+                      type: object
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Up to 100 custom key/value pairs.
+              required:
+              - destination
+              - funds
+      responses:
+        '201':
+          description: Donation accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: UUID
+                  type:
+                    type: string
+                    example: donations
+                  destination:
+                    type: object
+                  funds:
+                    type: object
+                  donor:
+                    type: object
+                  metadata:
+                    type: object
+                  state:
+                    type: object
+                    properties:
+                      processingStatus:
+                        type: string
+                        example: ACCEPTED
+                      statusLastUpdated:
+                        type: string
+                        format: date-time
+  /payments/card/transactions:
+    post:
+      operationId: createCreditCardDonation
+      tags:
+      - Giving
+      summary: Create a prepaid credit card donation
+      description: Captures a donation immediately via a tokenized card payment (BlueSnap-backed processor), optionally split across multiple cause allocations, with optional Gift Aid (UK) handling.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyCode:
+                  type: string
+                total:
+                  type: integer
+                currencyCode:
+                  type: string
+                paymentConfig:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                    merchantAccountId:
+                      type: string
+                    processor:
+                      type: string
+                      example: BLUESNAP
+                cardHolder:
+                  type: object
+                referenceNumber:
+                  type: string
+                adapter:
+                  type: string
+                  example: Adapter.General
+                purchaseItems:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      itemTotalAmountCents:
+                        type: integer
+                      allocations:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            causeCode:
+                              type: string
+                            amountCents:
+                              type: integer
+                giftAid:
+                  type: boolean
+                description:
+                  type: string
+                softDescriptor:
+                  type: string
+                payerBusinessName:
+                  type: string
+              required:
+              - companyCode
+              - total
+              - currencyCode
+              - paymentConfig
+              - referenceNumber
+              - purchaseItems
+      responses:
+        '201':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactionId:
+                    type: string
+                  creditCardId:
+                    type: string
+                  processorTransactionId:
+                    type: string
+                  referenceNumber:
+                    type: string
+                  backendReceiptId:
+                    type: string
+                  amount:
+                    type: object
+                    properties:
+                      totalAmountCents:
+                        type: integer
+                      currencyCode:
+                        type: string
+                  transactionFee:
+                    type: number
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    basicAuth:
+      type: http
+      scheme: basic
+externalDocs:
+  description: Benevity API Documentation
+  url: https://developer.benevity.org/

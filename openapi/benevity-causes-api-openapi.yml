@@ -1,0 +1,137 @@
+openapi: 3.0.3
+info:
+  title: Benevity Authorization Causes API
+  description: Modeled from the public Benevity API documentation at developer.benevity.org. Covers the confirmed Causes, Giving (donations), Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials are partner-gated (request-a-demo); this document reflects publicly documented paths and fields only - it does not fabricate an unverified full surface. The Location Services API is intentionally omitted here (see review.yml) because its exact request/response schema beyond the overview guide was not independently confirmed.
+  version: '2024.8'
+  contact:
+    name: Benevity
+    url: https://developer.benevity.org/
+servers:
+- url: https://skyline.benevity.org
+  description: Giving, Causes, and Receipts API host
+- url: https://api.benevity.org
+  description: Spark API host (production)
+- url: https://api.benevity-staging.org
+  description: Spark API host (sandbox)
+security:
+- bearerAuth: []
+tags:
+- name: Causes
+paths:
+  /search/causes:
+    get:
+      operationId: searchCauses
+      tags:
+      - Causes
+      summary: Search the Benevity Cause Database
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Search term matched against cause name, description, and tags.
+      - name: visibility
+        in: query
+        schema:
+          type: string
+          enum:
+          - match
+          - donate
+          - program
+          - nominate
+          - ineligible
+          - inactive
+      - name: category
+        in: query
+        schema:
+          type: string
+        description: NTEE category/subcategory filter.
+      - name: country
+        in: query
+        schema:
+          type: string
+        description: ISO 3166 country code.
+      - name: state
+        in: query
+        schema:
+          type: string
+        description: ISO 3166-2 state/province code.
+      - name: search_location
+        in: query
+        schema:
+          type: string
+        description: '"latitude,longitude" for proximity search.'
+      - name: autocorrect
+        in: query
+        schema:
+          type: boolean
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          default: 25
+      - name: sort
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching causes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            city:
+                              type: string
+                            state:
+                              type: string
+                            country:
+                              type: string
+                            categories:
+                              type: array
+                              items:
+                                type: string
+                            visibility:
+                              type: string
+                            status:
+                              type: object
+                            snippets:
+                              type: array
+                              items:
+                                type: string
+                  meta:
+                    type: object
+                  links:
+                    type: object
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    basicAuth:
+      type: http
+      scheme: basic
+externalDocs:
+  description: Benevity API Documentation
+  url: https://developer.benevity.org/

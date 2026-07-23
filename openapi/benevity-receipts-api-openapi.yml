@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Benevity Authorization Receipts API
+  description: Modeled from the public Benevity API documentation at developer.benevity.org. Covers the confirmed Causes, Giving (donations), Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials are partner-gated (request-a-demo); this document reflects publicly documented paths and fields only - it does not fabricate an unverified full surface. The Location Services API is intentionally omitted here (see review.yml) because its exact request/response schema beyond the overview guide was not independently confirmed.
+  version: '2024.8'
+  contact:
+    name: Benevity
+    url: https://developer.benevity.org/
+servers:
+- url: https://skyline.benevity.org
+  description: Giving, Causes, and Receipts API host
+- url: https://api.benevity.org
+  description: Spark API host (production)
+- url: https://api.benevity-staging.org
+  description: Spark API host (sandbox)
+security:
+- bearerAuth: []
+tags:
+- name: Receipts
+paths:
+  /receipts/{backendReceiptId}:
+    get:
+      operationId: getReceiptPdf
+      tags:
+      - Receipts
+      summary: Download a donation receipt as PDF
+      parameters:
+      - name: backendReceiptId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: test_receipt_id_4G801PXR6W
+      responses:
+        '200':
+          description: Receipt PDF
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+  /receipts/{backendReceiptId}/email:
+    post:
+      operationId: emailReceipt
+      tags:
+      - Receipts
+      summary: Email a donation receipt to the donor
+      parameters:
+      - name: backendReceiptId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+              required:
+              - email
+      responses:
+        '202':
+          description: Receipt email queued for delivery
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    basicAuth:
+      type: http
+      scheme: basic
+externalDocs:
+  description: Benevity API Documentation
+  url: https://developer.benevity.org/

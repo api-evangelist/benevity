@@ -1,0 +1,209 @@
+openapi: 3.0.3
+info:
+  title: Benevity Authorization Spark API
+  description: Modeled from the public Benevity API documentation at developer.benevity.org. Covers the confirmed Causes, Giving (donations), Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials are partner-gated (request-a-demo); this document reflects publicly documented paths and fields only - it does not fabricate an unverified full surface. The Location Services API is intentionally omitted here (see review.yml) because its exact request/response schema beyond the overview guide was not independently confirmed.
+  version: '2024.8'
+  contact:
+    name: Benevity
+    url: https://developer.benevity.org/
+servers:
+- url: https://skyline.benevity.org
+  description: Giving, Causes, and Receipts API host
+- url: https://api.benevity.org
+  description: Spark API host (production)
+- url: https://api.benevity-staging.org
+  description: Spark API host (sandbox)
+security:
+- bearerAuth: []
+tags:
+- name: Spark
+paths:
+  /search/givingopportunities:
+    get:
+      operationId: searchGivingOpportunities
+      tags:
+      - Spark
+      summary: Search a company's giving opportunities (Spark API)
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: search_location
+        in: query
+        schema:
+          type: string
+      - name: autocorrect
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Matching giving opportunities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        image_url:
+                          type: string
+                        creator_id:
+                          type: string
+                        creator_name:
+                          type: string
+                        creator_type:
+                          type: string
+                        peer_match:
+                          type: boolean
+                        company_match:
+                          type: boolean
+                        portfolio_code:
+                          type: string
+                        projects:
+                          type: array
+                          items:
+                            type: object
+                        causes:
+                          type: array
+                          items:
+                            type: object
+                        snippets:
+                          type: array
+                          items:
+                            type: string
+  /search/volunteeropportunities:
+    get:
+      operationId: searchVolunteerOpportunities
+      tags:
+      - Spark
+      summary: Search a company's volunteer opportunities (Spark API)
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: search_location
+        in: query
+        schema:
+          type: string
+      - name: autocorrect
+        in: query
+        schema:
+          type: boolean
+      - name: filter[ends_after]
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: filter[starts_before]
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: filter[minimum_open_spots]
+        in: query
+        schema:
+          type: integer
+      - name: filter[has_location]
+        in: query
+        schema:
+          type: boolean
+      - name: filter[interests]
+        in: query
+        schema:
+          type: string
+      - name: filter[skills]
+        in: query
+        schema:
+          type: string
+      - name: filter[temporal_type]
+        in: query
+        schema:
+          type: string
+          enum:
+          - ongoing
+          - time_bounded
+      responses:
+        '200':
+          description: Matching volunteer opportunities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  volunteer_opportunities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        description:
+                          type: string
+                        location_notes:
+                          type: string
+                        start_timestamp:
+                          type: string
+                          format: date-time
+                        end_timestamp:
+                          type: string
+                          format: date-time
+                        time_zone:
+                          type: string
+                        cause_id:
+                          type: string
+                        cause_name:
+                          type: string
+                        image_url:
+                          type: string
+                        hero_image_url:
+                          type: string
+                        cause_logo_url:
+                          type: string
+                        address:
+                          type: object
+                        characteristics:
+                          type: array
+                          items:
+                            type: string
+                        interests:
+                          type: array
+                          items:
+                            type: string
+                        skills:
+                          type: array
+                          items:
+                            type: string
+                        shifts:
+                          type: array
+                          items:
+                            type: object
+                        geo_coordinates:
+                          type: object
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    basicAuth:
+      type: http
+      scheme: basic
+externalDocs:
+  description: Benevity API Documentation
+  url: https://developer.benevity.org/
