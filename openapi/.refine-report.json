@@ -1,0 +1,22 @@
+{
+  "provider": "benevity",
+  "sources": [
+    "benevity-authorization-api-openapi.yml",
+    "benevity-causes-api-openapi.yml",
+    "benevity-giving-api-openapi.yml",
+    "benevity-receipts-api-openapi.yml",
+    "benevity-spark-api-openapi.yml"
+  ],
+  "outputs": [
+    "benevity-authorization-api-openapi.yml",
+    "benevity-causes-api-openapi.yml",
+    "benevity-giving-api-openapi.yml",
+    "benevity-receipts-api-openapi.yml",
+    "benevity-spark-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
