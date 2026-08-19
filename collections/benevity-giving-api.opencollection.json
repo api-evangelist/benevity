@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benevity Authorization Giving API",
+    "version": "2024.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Giving",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a postpaid company donation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://skyline.benevity.org/donations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits a donation settled monthly against a donation report invoiced to the client company, rather than captured immediately by card."
+        },
+        {
+          "info": {
+            "name": "Create a prepaid credit card donation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://skyline.benevity.org/payments/card/transactions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Captures a donation immediately via a tokenized card payment (BlueSnap-backed processor), optionally split across multiple cause allocations, with optional Gift Aid (UK) handling."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

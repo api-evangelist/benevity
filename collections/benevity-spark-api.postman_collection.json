@@ -1,0 +1,318 @@
+{
+  "item": [
+    {
+      "id": "c2eedfa3-b9b4-48ee-b2c4-62f26a542972",
+      "name": "Spark",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "92d3704f-dce5-4ac4-a34b-2dbb5846ca32",
+          "name": "Search a company's giving opportunities (Spark API)",
+          "request": {
+            "name": "Search a company's giving opportunities (Spark API)",
+            "description": {},
+            "url": {
+              "path": [
+                "search",
+                "givingopportunities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "search_location",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "autocorrect",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "54f96df1-8be7-4c4d-9177-6adf7550cc10",
+              "name": "Matching giving opportunities",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "givingopportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search_location",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "autocorrect",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": 6230,\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"image_url\": \"string\",\n      \"creator_id\": \"string\",\n      \"creator_name\": \"string\",\n      \"creator_type\": \"string\",\n      \"peer_match\": false,\n      \"company_match\": true,\n      \"portfolio_code\": \"string\",\n      \"snippets\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": 6998,\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"image_url\": \"string\",\n      \"creator_id\": \"string\",\n      \"creator_name\": \"string\",\n      \"creator_type\": \"string\",\n      \"peer_match\": false,\n      \"company_match\": false,\n      \"portfolio_code\": \"string\",\n      \"snippets\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d4afaa7-33b9-4817-ac71-a2330d28f642",
+          "name": "Search a company's volunteer opportunities (Spark API)",
+          "request": {
+            "name": "Search a company's volunteer opportunities (Spark API)",
+            "description": {},
+            "url": {
+              "path": [
+                "search",
+                "volunteeropportunities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "search_location",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "autocorrect",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[ends_after]",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[starts_before]",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[minimum_open_spots]",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[has_location]",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[interests]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[skills]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[temporal_type]",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac1f8aa7-3bed-4f18-82fc-8b24927c8586",
+              "name": "Matching volunteer opportunities",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "volunteeropportunities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search_location",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "autocorrect",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[ends_after]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[starts_before]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "filter[minimum_open_spots]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "filter[has_location]",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "filter[interests]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[skills]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[temporal_type]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"volunteer_opportunities\": [\n    {\n      \"id\": 2026,\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"location_notes\": \"string\",\n      \"start_timestamp\": \"1957-08-05T14:05:25.808Z\",\n      \"end_timestamp\": \"1989-01-31T11:06:38.051Z\",\n      \"time_zone\": \"string\",\n      \"cause_id\": \"string\",\n      \"cause_name\": \"string\",\n      \"image_url\": \"string\",\n      \"hero_image_url\": \"string\",\n      \"cause_logo_url\": \"string\",\n      \"address\": {},\n      \"characteristics\": [\n        \"string\",\n        \"string\"\n      ],\n      \"interests\": [\n        \"string\",\n        \"string\"\n      ],\n      \"skills\": [\n        \"string\",\n        \"string\"\n      ],\n      \"geo_coordinates\": {}\n    },\n    {\n      \"id\": 7869,\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"location_notes\": \"string\",\n      \"start_timestamp\": \"2009-05-17T18:28:40.499Z\",\n      \"end_timestamp\": \"1957-03-27T03:20:24.236Z\",\n      \"time_zone\": \"string\",\n      \"cause_id\": \"string\",\n      \"cause_name\": \"string\",\n      \"image_url\": \"string\",\n      \"hero_image_url\": \"string\",\n      \"cause_logo_url\": \"string\",\n      \"address\": {},\n      \"characteristics\": [\n        \"string\",\n        \"string\"\n      ],\n      \"interests\": [\n        \"string\",\n        \"string\"\n      ],\n      \"skills\": [\n        \"string\",\n        \"string\"\n      ],\n      \"geo_coordinates\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://skyline.benevity.org",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8affb855-aca0-43c6-a3f9-806c3458f6c0",
+    "name": "Benevity Authorization Spark API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modeled from the public Benevity API documentation at developer.benevity.org. Covers the confirmed Causes, Giving (donations), Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials are partner-gated (request-a-demo); this document reflects publicly documented paths and fields only - it does not fabricate an unverified full surface. The Location Services API is intentionally omitted here (see review.yml) because its exact request/response schema beyond the overview guide was not independently confirmed.\n\nContact Support:\n Name: Benevity",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benevity Authorization Receipts API",
+    "version": "2024.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Receipts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download a donation receipt as PDF",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://skyline.benevity.org/receipts/:backendReceiptId",
+            "params": [
+              {
+                "name": "backendReceiptId",
+                "value": "test_receipt_id_4G801PXR6W",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a donation receipt as PDF"
+        },
+        {
+          "info": {
+            "name": "Email a donation receipt to the donor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://skyline.benevity.org/receipts/:backendReceiptId/email",
+            "params": [
+              {
+                "name": "backendReceiptId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Email a donation receipt to the donor"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benevity Authorization Spark API",
+    "version": "2024.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Spark",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search a company's giving opportunities (Spark API)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://skyline.benevity.org/search/givingopportunities",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search_location",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "autocorrect",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search a company's giving opportunities (Spark API)"
+        },
+        {
+          "info": {
+            "name": "Search a company's volunteer opportunities (Spark API)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://skyline.benevity.org/search/volunteeropportunities",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search_location",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "autocorrect",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[ends_after]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[starts_before]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[minimum_open_spots]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[has_location]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[interests]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[skills]",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[temporal_type]",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search a company's volunteer opportunities (Spark API)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

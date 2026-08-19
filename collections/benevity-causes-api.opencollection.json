@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benevity Authorization Causes API",
+    "version": "2024.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Causes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search the Benevity Cause Database",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://skyline.benevity.org/search/causes",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search term matched against cause name, description, and tags."
+              },
+              {
+                "name": "visibility",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "NTEE category/subcategory filter."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "ISO 3166 country code."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "ISO 3166-2 state/province code."
+              },
+              {
+                "name": "search_location",
+                "value": "",
+                "type": "query",
+                "description": "\"latitude,longitude\" for proximity search."
+              },
+              {
+                "name": "autocorrect",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search the Benevity Cause Database"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

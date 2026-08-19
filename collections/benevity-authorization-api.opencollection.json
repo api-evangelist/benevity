@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Benevity Authorization API",
+    "version": "2024.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Obtain an OAuth 2.0 client-credentials access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://skyline.benevity.org/oauth2/token",
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Server-to-server OAuth 2.0 client credentials grant. Send Basic Authentication with base64-encoded `client_id:client_secret`. Tokens are valid for `expires_in` seconds (typically 3600) and should be reused until expiry rather than fetched per request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

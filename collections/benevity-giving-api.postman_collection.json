@@ -1,0 +1,243 @@
+{
+  "item": [
+    {
+      "id": "4d075dac-a66b-41e9-9dbb-3b648709da17",
+      "name": "Giving",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6faadabe-30c6-492b-85f4-9f8ddbdd8314",
+          "name": "Create a postpaid company donation",
+          "request": {
+            "name": "Create a postpaid company donation",
+            "description": {
+              "content": "Submits a donation settled monthly against a donation report invoiced to the client company, rather than captured immediately by card.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "donations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destination\": {\n    \"recipientId\": \"<string>\",\n    \"foundationId\": \"<string>\"\n  },\n  \"funds\": {\n    \"paymentType\": \"<string>\",\n    \"currencyCode\": \"<string>\",\n    \"amount\": \"<integer>\"\n  },\n  \"donor\": {\n    \"fullName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"receipted\": \"<boolean>\",\n    \"address\": \"<object>\"\n  },\n  \"metadata\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "170375d1-6940-4dab-89a8-ceeab73e2b40",
+              "name": "Donation accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "donations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"destination\": {\n    \"recipientId\": \"<string>\",\n    \"foundationId\": \"<string>\"\n  },\n  \"funds\": {\n    \"paymentType\": \"<string>\",\n    \"currencyCode\": \"<string>\",\n    \"amount\": \"<integer>\"\n  },\n  \"donor\": {\n    \"fullName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"receipted\": \"<boolean>\",\n    \"address\": \"<object>\"\n  },\n  \"metadata\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"donations\",\n  \"destination\": {},\n  \"funds\": {},\n  \"donor\": {},\n  \"metadata\": {},\n  \"state\": {\n    \"processingStatus\": \"ACCEPTED\",\n    \"statusLastUpdated\": \"1977-03-25T03:32:52.291Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a03f4b5-d65f-44e4-a77a-da4d931b077a",
+          "name": "Create a prepaid credit card donation",
+          "request": {
+            "name": "Create a prepaid credit card donation",
+            "description": {
+              "content": "Captures a donation immediately via a tokenized card payment (BlueSnap-backed processor), optionally split across multiple cause allocations, with optional Gift Aid (UK) handling.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                "card",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyCode\": \"<string>\",\n  \"total\": \"<integer>\",\n  \"currencyCode\": \"<string>\",\n  \"paymentConfig\": {\n    \"token\": \"<string>\",\n    \"merchantAccountId\": \"<string>\",\n    \"processor\": \"<string>\"\n  },\n  \"referenceNumber\": \"<string>\",\n  \"purchaseItems\": [\n    {\n      \"itemTotalAmountCents\": \"<integer>\",\n      \"allocations\": [\n        {\n          \"causeCode\": \"<string>\",\n          \"amountCents\": \"<integer>\"\n        },\n        {\n          \"causeCode\": \"<string>\",\n          \"amountCents\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"itemTotalAmountCents\": \"<integer>\",\n      \"allocations\": [\n        {\n          \"causeCode\": \"<string>\",\n          \"amountCents\": \"<integer>\"\n        },\n        {\n          \"causeCode\": \"<string>\",\n          \"amountCents\": \"<integer>\"\n        }\n      ]\n    }\n  ],\n  \"cardHolder\": \"<object>\",\n  \"adapter\": \"<string>\",\n  \"giftAid\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"softDescriptor\": \"<string>\",\n  \"payerBusinessName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1cf33475-40c9-4df2-9012-68fe464be7d4",
+              "name": "Transaction created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    "card",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"companyCode\": \"<string>\",\n  \"total\": \"<integer>\",\n  \"currencyCode\": \"<string>\",\n  \"paymentConfig\": {\n    \"token\": \"<string>\",\n    \"merchantAccountId\": \"<string>\",\n    \"processor\": \"BLUESNAP\"\n  },\n  \"referenceNumber\": \"<string>\",\n  \"purchaseItems\": [\n    {\n      \"itemTotalAmountCents\": \"<integer>\",\n      \"allocations\": [\n        {\n          \"causeCode\": \"<string>\",\n          \"amountCents\": \"<integer>\"\n        },\n        {\n          \"causeCode\": \"<string>\",\n          \"amountCents\": \"<integer>\"\n        }\n      ]\n    },\n    {\n      \"itemTotalAmountCents\": \"<integer>\",\n      \"allocations\": [\n        {\n          \"causeCode\": \"<string>\",\n          \"amountCents\": \"<integer>\"\n        },\n        {\n          \"causeCode\": \"<string>\",\n          \"amountCents\": \"<integer>\"\n        }\n      ]\n    }\n  ],\n  \"cardHolder\": \"<object>\",\n  \"adapter\": \"Adapter.General\",\n  \"giftAid\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"softDescriptor\": \"<string>\",\n  \"payerBusinessName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactionId\": \"string\",\n  \"creditCardId\": \"string\",\n  \"processorTransactionId\": \"string\",\n  \"referenceNumber\": \"string\",\n  \"backendReceiptId\": \"string\",\n  \"amount\": {\n    \"totalAmountCents\": 3943,\n    \"currencyCode\": \"string\"\n  },\n  \"transactionFee\": 4420.9268037594675\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://skyline.benevity.org",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "81d8fdad-cf7e-4e3d-bbfc-507a2ce85363",
+    "name": "Benevity Authorization Giving API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Modeled from the public Benevity API documentation at developer.benevity.org. Covers the confirmed Causes, Giving (donations), Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials are partner-gated (request-a-demo); this document reflects publicly documented paths and fields only - it does not fabricate an unverified full surface. The Location Services API is intentionally omitted here (see review.yml) because its exact request/response schema beyond the overview guide was not independently confirmed.\n\nContact Support:\n Name: Benevity",
+      "type": "text/plain"
+    }
+  }
+}
