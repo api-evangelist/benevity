@@ -65,6 +65,10 @@ apis:
 - aid: benevity:benevity-location-services-api
   name: Benevity Location Services API
   tags:
+  - Location
+  - Franchises
+  - Community Investment
+  tags_raw:
   - Locations
   - Franchises
   - Community Investment
