@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Benevity Authorization Giving API
-  description: Modeled from the public Benevity API documentation at developer.benevity.org. Covers the confirmed Causes, Giving (donations), Receipts, and Spark (giving/volunteer opportunities) endpoints. Credentials are partner-gated (request-a-demo); this document reflects publicly documented paths and fields only - it does not fabricate an unverified full surface. The Location Services API is intentionally omitted here (see review.yml) because its exact request/response schema beyond the overview guide was not independently confirmed.
+  title: Benevity Giving API
+  description: Modeled from the public Benevity API documentation at developer.benevity.org.
   version: '2024.8'
   contact:
     name: Benevity

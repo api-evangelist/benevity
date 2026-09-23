@@ -1,11 +1,7 @@
 {
   "provider": "benevity",
   "sources": [
-    "benevity-authorization-api-openapi.yml",
-    "benevity-causes-api-openapi.yml",
-    "benevity-giving-api-openapi.yml",
-    "benevity-receipts-api-openapi.yml",
-    "benevity-spark-api-openapi.yml"
+    "_original/benevity-openapi.yml"
   ],
   "outputs": [
     "benevity-authorization-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "benevity-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "benevity-authorization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benevity-causes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benevity-giving-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benevity-receipts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "benevity-spark-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
