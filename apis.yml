@@ -59,7 +59,7 @@ tags_raw:
 - CSR
 - ESG
 created: '2026-07-03'
-modified: '2026-07-03'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: benevity:benevity-location-services-api
@@ -247,6 +247,8 @@ apis:
   - type: APIReference
     url: https://developer.benevity.org/guides/spark-api/search-volops.html
 common:
+- url: https://benevity.com/blog
+  type: Blog
 - type: AgenticAccess
   url: agentic-access/benevity-agentic-access.yml
 - type: TrustCenter
