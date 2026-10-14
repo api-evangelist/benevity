@@ -1,0 +1,16 @@
+generated: '2026-10-14'
+method: searched
+checked:
+- https://benevity.com/partners
+source:
+- https://benevity.com/partners
+marketplace_apps:
+- marketplace: own
+  channel: partner-built
+  app: benevity
+  url: https://benevity.com/partners
+  app_count: null
+  adapter: sweep-nonprofit.py:unreadable
+  listed: 0
+  status: not-machine-readable (HTTP 404; no partner/integration directory (404))
+edges: []
