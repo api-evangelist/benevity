@@ -2,6 +2,7 @@ generated: '2026-10-14'
 method: searched
 checked:
 - https://benevity.com/partners
+- microsoft-teams/integrations/microsoft-teams-integration-edges.yml
 source:
 - https://benevity.com/partners
 marketplace_apps:
@@ -13,4 +14,23 @@ marketplace_apps:
   adapter: sweep-nonprofit.py:unreadable
   listed: 0
   status: not-machine-readable (HTTP 404; no partner/integration directory (404))
-edges: []
+edges:
+- partner_name: Microsoft Teams (own)
+  partner: microsoft-teams
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://appsource.microsoft.com/en-us/product/office/WA200011631
+  mirror_of: microsoft-teams/integrations/microsoft-teams-integration-edges.yml
+  apps:
+  - Benevity
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Microsoft Teams app
+  publisher_verified:
+  - Microsoft 365 Publisher Attestation
