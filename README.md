@@ -1,4 +1,4 @@
-# Benevity (benevity)
+# Benevity
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,129 +64,128 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Benevity is a Calgary-based corporate purpose software platform for workplace giving, matching, grantmaking, and employee/customer volunteering. Its Giving API lets partners embed nonprofit-of-choice donations, optional matching, and charitable gift cards into e-commerce, banking, and rewards experiences; the Cause Search API exposes Benevity's vetted global nonprofit database; the Spark API lets existing Spark Employee Engagement clients surface giving and volunteering opportunities in other interfaces; and the Location Services API lets clients manage locations (stores, franchises, offices) inside the Benevity ecosystem.
+Benevity is a Calgary-based corporate purpose software platform for workplace giving, matching, grantmaking, and employee/customer volunteering. Its Giving API lets partners embed nonprofit-of-choice donations, optional matching, and charitable gift cards into e-commerce, banking, and rewards experiences; the Cause Search API exposes Benevity's vetted global nonprofit database; the Spark API lets existing Spark Employee Engagement clients surface giving and volunteering opportunities in other interfaces; and the Location Services API lets clients manage locations (stores, franchises, offices) inside the Benevity ecosystem. The API follows the RESTful/OpenAPI standard and is documented publicly at developer.benevity.org, but credentials are partner-gated - access requires requesting a demo/business relationship with Benevity rather than self-serve signup.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/benevity/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/benevity/refs/heads/main/apis.yml)
+**Areas:** Corporate Social Responsibility · Workplace Giving · Donations · Volunteering · Non-Profit · Matching Gifts · CSR · ESG
 
-## Access model
+## Benevity on APIs.io
 
-Benevity's API documentation at [developer.benevity.org](https://developer.benevity.org/) is publicly readable and follows the RESTful/OpenAPI standard, but **credentials are partner-gated**. There is no self-serve signup or public price list - a prospective integrator requests a demo through [benevity.com/request-a-demo](https://www.benevity.com/request-a-demo), and Benevity provisions OAuth 2.0 client credentials (and sandbox access at `api.benevity-staging.org`) as part of a negotiated client/partner agreement. The Spark API specifically is scoped to organizations that are already Spark Employee Engagement clients.
+Everything profiled for Benevity is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/benevity/](https://apis.io/providers/benevity/)** — or go straight to one of the APIs or properties below.
 
-This entry documents the real, publicly-described API surface (paths, parameters, hosts, auth flow) as found in Benevity's own guides. It does not fabricate endpoints beyond what is documented; where a surface (Location Services) wasn't independently confirmed down to exact request/response schemas, it's flagged as `endpointsModeled` in `review.yml` rather than given a fabricated OpenAPI/collection entry.
+### APIs (6)
 
-## Tags
+- [Benevity Location Services API](https://apis.io/apis/benevity/benevity-location-services-api/) — Create and manage locations (stores, franchises, offices) inside the Benevity ecosystem - address data, contact information, and tags - so multi-location…
+- [Benevity Authorization API](https://apis.io/apis/benevity/benevity-authorization-api/) — The Authorization API from Benevity — 1 operation(s) for authorization.
+- [Benevity Causes API](https://apis.io/apis/benevity/benevity-causes-api/) — The Causes API from Benevity — 1 operation(s) for causes.
+- [Benevity Giving API](https://apis.io/apis/benevity/benevity-giving-api/) — The Giving API from Benevity — 2 operation(s) for giving.
+- [Benevity Receipts API](https://apis.io/apis/benevity/benevity-receipts-api/) — The Receipts API from Benevity — 2 operation(s) for receipts.
+- [Benevity Spark API](https://apis.io/apis/benevity/benevity-spark-api/) — The Spark API from Benevity — 2 operation(s) for spark.
 
-- Corporate Social Responsibility
-- Workplace Giving
-- Donations
-- Volunteering
-- Nonprofits
-- Matching Gifts
-- CSR
-- ESG
+### Published properties
 
-## Timestamps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Created:** 2026-07-03
-- **Modified:** 2026-07-03
+#### Agentic access (1)
 
-## APIs
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Benevity Causes API
+- [Benevity Agentic Access](https://apis.io/agentic-access/benevity/benevity-agentic-access/)
 
-Search the Benevity Cause Database - a global directory of vetted, registered nonprofits - by keyword, location, NTEE category, country/state, and geographic proximity, with pagination and eligibility (match/donate/program/nominate) filtering on each result.
+#### Collections (6)
 
-- **Human URL:** [https://developer.benevity.org/guides/causes/search-cause](https://developer.benevity.org/guides/causes/search-cause)
-- **Base URL:** `https://skyline.benevity.org`
+Postman and Open Collection request collections.
 
-#### Properties
+- [Benevity API](https://apis.io/collections/benevity/open-benevity/)
+- [Benevity Authorization API](https://apis.io/collections/benevity/open-benevity-authorization-api/)
+- [Benevity Authorization Causes API](https://apis.io/collections/benevity/open-benevity-causes-api/)
+- [Benevity Authorization Giving API](https://apis.io/collections/benevity/open-benevity-giving-api/)
+- [Benevity Authorization Receipts API](https://apis.io/collections/benevity/open-benevity-receipts-api/)
+- [Benevity Authorization Spark API](https://apis.io/collections/benevity/open-benevity-spark-api/)
 
-- [Documentation](https://developer.benevity.org/guides/)
-- [API Reference](https://developer.benevity.org/guides/causes/search-cause)
-- [OpenAPI](openapi/benevity-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/benevity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/benevity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Security (4)
 
-### Benevity Giving API
+Authentication, trust centre, and vulnerability disclosure.
 
-Route nonprofit-of-choice donations into digital experiences - e-commerce, online banking, rewards programs, and charitable gift cards. Postpaid company donations settle monthly against a donation report; prepaid donations are captured immediately by credit card (via a BlueSnap-backed tokenized payment flow), with optional company/peer matching and Gift Aid (UK) handling.
+- [Benevity Authentication](https://apis.io/security/benevity/benevity-authentication/)
+- [Benevity Domain Security](https://apis.io/security/benevity/benevity-domain-security/)
+- [Benevity Trust Center](https://apis.io/security/benevity/benevity-trust-center/)
+- [Benevity Vulnerability Disclosure](https://apis.io/security/benevity/benevity-vulnerability-disclosure/)
 
-- **Human URL:** [https://developer.benevity.org/guides/giving/](https://developer.benevity.org/guides/giving/)
-- **Base URL:** `https://skyline.benevity.org`
+#### Plans and pricing (1)
 
-#### Properties
+Published plans, tiers and prices.
 
-- [Documentation - Postpaid Donations](https://developer.benevity.org/guides/giving/post-paid-donations/)
-- [Documentation - Prepaid Donations](https://developer.benevity.org/guides/giving/pre-paid-donations/)
-- [OpenAPI](openapi/benevity-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/benevity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/benevity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Benevity Plans Pricing](https://apis.io/plans/benevity/benevity-plans-pricing/)
 
-### Benevity Receipts API
+#### Rate limits (1)
 
-Retrieve the PDF receipt for a completed donation by its backend receipt ID, or request that the receipt be emailed to the donor. Receipts show issue date, donor name/address, amount, and the disbursing foundation partner.
+Published request limits.
 
-- **Human URL:** [https://developer.benevity.org/guides/giving/get-receipt.html](https://developer.benevity.org/guides/giving/get-receipt.html)
-- **Base URL:** `https://skyline.benevity.org`
+- [Benevity Rate Limits](https://apis.io/rate-limits/benevity/benevity-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://developer.benevity.org/guides/giving/get-receipt.html)
-- [OpenAPI](openapi/benevity-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/benevity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/benevity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+What the API costs to run, by operation.
 
-### Benevity Spark Giving Opportunities API
+- [Benevity Finops](https://apis.io/finops/benevity/benevity-finops/)
 
-For existing Spark Employee Engagement clients - search a company's active giving opportunities (initiatives that route donations to one or more causes) by keyword and geographic proximity, for display on an intranet or in a communication-tool integration.
+## Where to find this API
 
-- **Human URL:** [https://developer.benevity.org/guides/spark-api/search-giveops.html](https://developer.benevity.org/guides/spark-api/search-giveops.html)
-- **Base URL:** `https://api.benevity.org`
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://developer.benevity.org/guides/spark-api/overview.html)
-- [API Reference](https://developer.benevity.org/guides/spark-api/search-giveops.html)
-- [OpenAPI](openapi/benevity-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/benevity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/benevity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Benevity Spark Volunteer Opportunities API
-
-For existing Spark Employee Engagement clients - search a company's volunteer opportunities/events by keyword, date range, open shift spots, interests, skills, and whether the opportunity is ongoing or time-bounded.
-
-- **Human URL:** [https://developer.benevity.org/guides/spark-api/search-volops.html](https://developer.benevity.org/guides/spark-api/search-volops.html)
-- **Base URL:** `https://api.benevity.org`
-
-#### Properties
-
-- [Documentation](https://developer.benevity.org/guides/spark-api/overview.html)
-- [API Reference](https://developer.benevity.org/guides/spark-api/search-volops.html)
-- [OpenAPI](openapi/benevity-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/benevity.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/benevity.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Benevity Location Services API
-
-Create and manage locations (stores, franchises, offices) inside the Benevity ecosystem - address data, contact information, and tags - so multi-location organizations can attribute giving and volunteering activity to a specific site. JWT-authenticated with the `api.locations` scope, JSON:API content type, URI-versioned (v1 current). As of the review date this API is documented as integrated only with the Versaic community investment platform; exact request/response schemas beyond the overview guide were not independently confirmed, so no OpenAPI or collection artifact was generated for it (`endpointsModeled` - see `review.yml`).
-
-- **Human URL:** [https://developer.benevity.org/guides/location-api/overview.html](https://developer.benevity.org/guides/location-api/overview.html)
-- **Base URL:** `https://api.benevity.org`
-
-#### Properties
-
-- [Documentation](https://developer.benevity.org/guides/location-api/overview.html)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/benevity)
 - [Website](https://benevity.com)
 - [Documentation](https://developer.benevity.org/)
-- [Plans](plans/benevity-plans-pricing.yml)
-- [Rate Limits](rate-limits/benevity-rate-limits.yml)
-- [Fin Ops](finops/benevity-finops.yml)
+- [Blog](https://benevity.com/blog)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 17.1** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 13.2 |
+
+**Agent readiness 22.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/benevity/](https://apis.io/providers/benevity/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Benevity: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/benevity/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
